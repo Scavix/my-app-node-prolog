@@ -1,14 +1,13 @@
 const path = require('path');
 const cors = require('cors');
-
 const express = require('express');
+
 const PORT = process.env.PORT || 3001;
 
 const app = express();
 
-app.use(cors({
-    origin: '*'
-}));
+app.use(cors({origin: '*'}));
+app.use(express.json());
 
 app.get("/hello", (req, res) => {
     res.json({ message: "Hello from server!" });
@@ -27,9 +26,7 @@ app.post('/apiToMorse', (req, res) => {
 });
 
 app.post('/testPost', (req, res) => {
-    const data = req.body;
-    console.log(data);
-    res.status(200).json({ message: 'Resource created successfully', data });
+    res.send(JSON.stringify(req.body));
 });
 
 
