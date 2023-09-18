@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.use(cors({
-    origin: 'https://morse-prolog-u4tg.onrender.com/'
+    origin: '*'
 }));
 
 app.get("/api", (req, res) => {
