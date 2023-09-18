@@ -26,6 +26,12 @@ app.post('/apiToMorse', (req, res) => {
     res.json({ result: tripledsentence });
 });
 
+app.post('/testPost', (req, res) => {
+    const sentence = req.body.sentence;
+    res.json({ message: "Hello from server!" });
+});
+
+
 app.get("*", (req, res) => {
     res.status(404).send("404 Not Found");
 });
