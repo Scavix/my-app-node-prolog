@@ -27,7 +27,7 @@ app.post('/apiToMorse', (req, res) => {
 });
 
 app.post('/testPost', (req, res) => {
-    res.status(404).send("404 Not Found");
+    res.send(req.body);
 });
 
 
