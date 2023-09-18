@@ -27,7 +27,9 @@ app.post('/apiToMorse', (req, res) => {
 });
 
 app.post('/testPost', (req, res) => {
-    res.send(req.body);
+    const data = req.body;
+    console.log(data);
+    res.status(200).json({ message: 'Resource created successfully', data });
 });
 
 
