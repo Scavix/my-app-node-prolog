@@ -1,0 +1,18 @@
+{
+  "name": "my-app-node-prolog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engine":{
+    "node": "20.3.1"
+  }
+}
