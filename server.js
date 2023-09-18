@@ -27,7 +27,7 @@ app.post('/apiToMorse', (req, res) => {
 });
 
 app.post('/testPost', (req, res) => {
-    res.json(req.body);
+    res.semd(req.body);
 });
 
 
