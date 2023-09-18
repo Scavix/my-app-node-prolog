@@ -10,8 +10,20 @@ app.use(cors({
     origin: '*'
 }));
 
-app.get("/api", (req, res) => {
+app.get("/hello", (req, res) => {
     res.json({ message: "Hello from server!" });
+});
+
+app.post('/apiFromMorse', (req, res) => {
+    const sentence = req.body.sentence;
+    const doubledsentence = sentence + sentence;
+    res.json({ result: doubledsentence });
+});
+
+app.post('/apiToMorse', (req, res) => {
+    const sentence = req.body.sentence;
+    const tripledsentence = sentence + sentence + sentence;
+    res.json({ result: tripledsentence });
 });
 
 app.get("*", (req, res) => {
