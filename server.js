@@ -27,8 +27,7 @@ app.post('/apiToMorse', (req, res) => {
 });
 
 app.post('/testPost', (req, res) => {
-    const sentence = req.body;
-    res.json({ message: sentence });
+    res.json(req.body);
 });
 
 
