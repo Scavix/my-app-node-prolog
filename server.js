@@ -59,11 +59,7 @@ app.get("/hello", (req, res) => {
     res.json({ message: "Hello from server!" });
 });
 
-app.post('/testPost', (req, res) => {
-    res.send(JSON.stringify(req.body));
-});
-
-app.post('/fromMorse', (req, res) => {
+app.post('/apiFromMorse', (req, res) => {
     console.log(req.body.sentence);
     const session = pl.create(sessionsIds);
     sessionsIds++;
@@ -93,7 +89,7 @@ app.post('/fromMorse', (req, res) => {
     });
 });
 
-app.post('/toMorse', (req, res) => {
+app.post('/apiToMorse', (req, res) => {
     const session = pl.create(sessionsIds);
     sessionsIds++;
     const sentence = req.body.sentence;
