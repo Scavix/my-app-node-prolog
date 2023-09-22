@@ -59,8 +59,7 @@ app.get("/hello", (req, res) => {
     res.json({ message: "Hello from server!" });
 });
 
-app.post('/apiFromMorse', (req, res) => {
-    console.log(req.body.sentence);
+app.post('/apiFromMorse', async (req, res) => {
     const session = pl.create(sessionsIds);
     sessionsIds++;
     const sentence = req.body.sentence;
@@ -77,7 +76,7 @@ app.post('/apiFromMorse', (req, res) => {
                 success: function () {
                     session.answer({
                         success: function (answer) {
-                            res.json({ result: session.format_answer(answer) });
+                            res.json({ result: session.format_answer(answer).replace("Text = ", '').replace(/,/g, '').replace('[','').replace(']','') });
                         },
                         error: function (err) {
                             console.log("Uncaught error", err);
@@ -89,28 +88,37 @@ app.post('/apiFromMorse', (req, res) => {
     });
 });
 
-app.post('/apiToMorse', (req, res) => {
-    console.log(req.body.sentence);
+app.post('/apiToMorse', async (req, res) => {
     const session = pl.create(sessionsIds);
     sessionsIds++;
-    const sentence = req.body.sentence;
-    const goal = `morser(Morse,"${sentence}").`;
-    session.consult(program, {
-        success: function () {
-            session.query(goal, {
+    const sentences = req.body.sentence.split(" ");
+    let sentenceFinal = "";
+
+    for (let i = 0; i < sentences.length; i++) {
+        const goal = `morser(Morse,"${sentences[i]}").`;
+
+        await new Promise((resolve, reject) => {
+            session.consult(program, {
                 success: function () {
-                    session.answer({
-                        success: function (answer) {
-                            res.json({ result: session.format_answer(answer) });
-                        },
-                        error: function (err) {
-                            console.log("Uncaught error", err);
+                    session.query(goal, {
+                        success: function () {
+                            session.answer({
+                                success: function (answer) {
+                                    sentenceFinal += session.format_answer(answer).replace("Morse = ", '').replace('[[', '').replace(']]', '').replace(/\],\[/g, ' ').replace(/,/g, '') + "   ";
+                                    resolve();
+                                },
+                                error: function (err) {
+                                    sentenceFinal += "Error: " + err + "   ";
+                                    reject(err);
+                                }
+                            });
                         }
                     });
                 }
-            })
-        }
-    });
+            });
+        });
+    }
+    res.json({ result: sentenceFinal.slice(0, -3) });
 });
 
 app.get("*", (req, res) => {
