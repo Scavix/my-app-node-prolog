@@ -90,6 +90,7 @@ app.post('/apiFromMorse', (req, res) => {
 });
 
 app.post('/apiToMorse', (req, res) => {
+    console.log(req.body.sentence);
     const session = pl.create(sessionsIds);
     sessionsIds++;
     const sentence = req.body.sentence;
